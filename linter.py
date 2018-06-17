@@ -19,10 +19,10 @@ class CfnLint(Linter):
     version_args = '--version'
     version_re = r'(?P<version>\d+\.\d+\.\d+)'
     version_requirement = '>= 3.0.1'
-    regex = r'^.+?:(?P<line>\d+):(?P<col>\d+):\d+:\d+:(?P<code>.+):(?P<message>.+)'
+    regex = r'^.+?:(?P<line>\d+):(?P<col>\d+):\d+:\d+:((?P<warning>W)|(?P<error>E))(?P<code>.{4}):(?P<message>.+)'
     multiline = True
     line_col_base = (1, 1)
-    tempfile_suffix = 'yaml'
+    tempfile_suffix = '-'
     error_stream = util.STREAM_STDOUT
     word_re = None
     comment_re = r'\s*#'
