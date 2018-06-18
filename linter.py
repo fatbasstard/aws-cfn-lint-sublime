@@ -48,4 +48,31 @@ class CfnLint(Linter):
                 is_cfn = True;
 
         if is_cfn:
+            settings = self.get_view_settings()
+
+            # Add ignore rules
+            ignore_rules = settings.get('ignore_rules', [])
+            if len(ignore_rules) > 0:
+
+                cmd.append('--ignore-checks')
+
+                for ignore_rule in ignore_rules:
+                    cmd.append(ignore_rule)
+
+            # Add apprent rules paths
+            append_rules = settings.get('append_rules', [])
+            if len(append_rules) > 0:
+
+                cmd.append('--append-rules')
+
+                for append_rule in append_rules:
+                    cmd.append(append_rule)
+
+            # Add override spdcificaton file
+            override_spec = settings.get('override_spec')
+
+            if override_spec:
+                cmd.append('--override-spec')
+                cmd.append(override_spec)
+
             return super().communicate(cmd, code)
