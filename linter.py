@@ -10,6 +10,7 @@
 
 from SublimeLinter.lint import Linter, util
 
+import re
 
 class CfnLint(Linter):
     """Provides an interface to cfn-lint."""
@@ -31,3 +32,20 @@ class CfnLint(Linter):
         'selector': 'source.yaml, source.json',
         'strict': True
     }
+
+    def communicate(self, cmd, code=None):
+        """Run an external executable using stdin to pass code and return its output."""
+        relfilename = self.filename
+
+        is_cfn = False;
+
+        # Check if we're processing a CloudFormation file
+        with open(relfilename, 'r', encoding='utf8') as file:
+            content = file.read()
+            regex = re.compile(r'"?AWSTemplateFormatVersion"?\s*')
+
+            if regex.search(content):
+                is_cfn = True;
+
+        if is_cfn:
+            return super().communicate(cmd, code)
