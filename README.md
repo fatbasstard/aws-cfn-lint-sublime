@@ -1,30 +1,42 @@
-This is a template. For "how to make a linter", please check [the HOWTO](HOWTO.md).
-
------------------------------------------------------------------
-
-SublimeLinter-contrib-__linter__
+SublimeLinter AWS CloudFormation
 ================================
+This linter plugin for [SublimeLinter](https://github.com/SublimeLinter/SublimeLinter) provides an interface to [cfn-lint](https://github.com/awslabs/cfn-python-lint). This plugin lints `yaml` and `json` CloudFormation templates.
 
-[![Build Status](https://travis-ci.org/SublimeLinter/SublimeLinter-contrib-__linter__.svg?branch=master)](https://travis-ci.org/SublimeLinter/SublimeLinter-contrib-__linter__)
-
-This linter plugin for [SublimeLinter](https://github.com/SublimeLinter/SublimeLinter) provides an interface to [__linter__](__linter_homepage__). It will be used with files that have the “__syntax__” syntax.
 
 ## Installation
-SublimeLinter must be installed in order to use this plugin. 
+SublimeLinter must be installed in order to use this plugin.
 
 Please use [Package Control](https://packagecontrol.io) to install the linter plugin.
 
-Before installing this plugin, you must ensure that `__linter__` is installed on your system.
+Before installing this plugin, you must ensure that `cfn-lint` is installed on your system.
 
-In order for `__linter__` to be executed by SublimeLinter, you must ensure that its path is available to SublimeLinter. The docs cover [troubleshooting PATH configuration](http://sublimelinter.readthedocs.io/en/latest/troubleshooting.html#finding-a-linter-executable).
+```
+pip install cfn-lint
+```
+
+**Note**: This plugin requires cfn-lint 0.2.2 or later.
 
 ## Settings
-- SublimeLinter settings: http://sublimelinter.readthedocs.org/en/latest/settings.html
-- Linter settings: http://sublimelinter.readthedocs.org/en/latest/linter_settings.html
+For general information on how SublimeLinter works with settings, please see [Settings]. For information on generic linter settings, please see [Linter Settings][linter-settings].
 
-Additional SublimeLinter-__linter__ settings:
+You can configure `cfn-lint` by adding the following options to the Sublime Linter User Settings:
 
-|Setting|Description    |
-|:------|:--------------|
-|foo    |Something.     |
-|bar    |Something else.|
+* ignore_rules: Array of rules that should be ignored when testing the file
+* append_rules: Array of paths containing additional rules to be applied
+* override_spec: Path the a Specification Override file
+
+Example:
+
+```json
+{
+  "linters": {
+	  "cfnlint": {
+	    "ignore_rules": ["W2507", "W2508"],
+	    "append_rules": ["/path/to/custom/rules"],
+	    "override_spec": "/path/to/override.json"
+	  }
+	}
+}
+```
+
+For details about these settings, check the [cfn-lint documentation](https://github.com/awslabs/cfn-python-lint#parameters)
